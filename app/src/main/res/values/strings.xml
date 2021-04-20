@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SharedPreferences</string>
+    <string name="default_theme">default theme</string>
+    <string name="red_theme">red theme</string>
+</resources>

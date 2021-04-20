@@ -2,4 +2,8 @@
     <string name="app_name">SharedPreferences</string>
     <string name="default_theme">default theme</string>
     <string name="red_theme">red theme</string>
+    <string name="open_user_profile">Open User Profile</string>
+    <string name="open_hyperskill">Open hyperskill</string>
+    <string name="completed_topics">completed topics</string>
+    <string name="hyperskill_member">hyperskill member</string>
 </resources>

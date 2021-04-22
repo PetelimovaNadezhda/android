@@ -1,5 +1,7 @@
 package com.example.sharedpreferences
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -8,6 +10,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sharedpreferences.databinding.ActivityMainBinding
+import java.util.*
 
 lateinit var sharedPreferences: SharedPreferences
 private lateinit var binding: ActivityMainBinding
@@ -26,17 +29,35 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        setSettingsSharedPeferences()
+        setSettingsSharedPreferences()
 //        changeThemeRuntime()
-
         goToProfileListener()
         goToSiteListener()
+        notificationByTime()
     }
 
-    private fun setSettingsSharedPeferences() {
+    private fun notificationByTime() {
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.YEAR, 2021)
+        calendar.set(Calendar.MONTH, Calendar.APRIL)
+        calendar.set(Calendar.DAY_OF_MONTH, 21)
+
+        calendar.set(Calendar.HOUR_OF_DAY, 13)
+        calendar.set(Calendar.MINUTE, 44)
+        calendar.set(Calendar.SECOND, 0)
+        val chosenTime = calendar.timeInMillis
+        val intent = Intent(applicationContext, Receiver::class.java)
+        val pendingIntent =
+            PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val am: AlarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+        am.set(AlarmManager.RTC_WAKEUP, chosenTime, pendingIntent)
+    }
+
+    private fun setSettingsSharedPreferences() {
         sharedPreferences = getPreferences(MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         val textForTextView = sharedPreferences.getString("theme", "default") + " theme"
+        binding.buttonToSite.display
         binding.textView.text = textForTextView
         binding.switch1.setOnCheckedChangeListener { _, isChecked ->
             editor.putString("theme", if (isChecked) "red" else "default").apply()
@@ -61,7 +82,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun changeThemeRuntime() {
-        binding.switch1.setOnClickListener { _ ->
+        binding.switch1.setOnClickListener {
             if (binding.switch1.isActivated) {
                 application.setTheme(R.style.SuperRedTheme)
                 binding.textView.text = getString(R.string.red_theme)

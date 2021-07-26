@@ -1,7 +1,5 @@
 package com.example.sharedpreferences
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.sharedpreferences.databinding.ProfileActivityBinding
@@ -17,7 +15,7 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(view)
 
         val text = getString(R.string.completed_topics) + " " + intent.getStringExtra("topics")
-        binding.textView2.text = text
+        binding.competedTopics.text = text
 
     }
 }

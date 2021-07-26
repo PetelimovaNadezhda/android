@@ -134,8 +134,10 @@ class MainActivity : AppCompatActivity() {
         binding.editText.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
                 i = Integer.valueOf(binding.editText.text.toString())
-                if (!isHandle)
+                if (!isHandle) {
                     handler.postDelayed(updateLight, 1000)
+                    isHandle = true
+                }
             } else {
                 handler.removeCallbacks(updateLight)
                 isHandle = false
